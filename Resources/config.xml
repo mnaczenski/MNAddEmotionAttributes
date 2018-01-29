@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/5.3/engine/Shopware/Components/Plugin/schema/config.xsd">
+    <elements>
+        <element type="select">
+            <name>useEmotionAttribute</name>
+            <label>UseEmotionAttribute</label>
+            <store>
+                <option>
+                    <value>Yes</value>
+                    <label lang="de">Ja</label>
+                    <label lang="en">Yes</label>
+                </option>
+                <option>
+                    <value>No</value>
+                    <label lang="de">Nein</label>
+                    <label lang="en">No</label>
+                </option>
+            </store>
+        </element>
+    </elements>
+</config>
