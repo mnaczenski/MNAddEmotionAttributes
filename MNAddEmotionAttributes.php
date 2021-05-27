@@ -22,6 +22,7 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
     {
         return [
             'Enlight_Controller_Action_PostDispatchSecure_Frontend_Listing' => 'onFrontendListing',
+            'Enlight_Controller_Action_PostDispatchSecure_Frontend_Index' => 'onFrontendListing',
             'Enlight_Controller_Action_PostDispatchSecure_Frontend' => 'onFrontend'
         ];
     }
@@ -41,6 +42,25 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
                 ['key' => '2', 'value' => 'Nach Listing']
             ],
         ]);
+
+        $service->update('s_emotion_attributes', 'mncssclasses', 'string', [
+            'label' => 'Eigene CSS Klassen',
+            'supportText' => 'Mehrere CSS Klassen mit Leerzeichen trennen',
+            'displayInBackend' => true,
+            'arrayStore' => [
+                ['key' => '1', 'value' => 'Vor Listing'],
+                ['key' => '2', 'value' => 'Nach Listing']
+            ],
+        ]);
+    }
+
+    /**
+     * @param InstallContext $context
+     * @throws \Exception
+     */
+    public function update(InstallContext $context)
+    {
+        return $this->install($context);
     }
 
     /**
@@ -51,6 +71,7 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
     {
         $service = $this->container->get('shopware_attribute.crud_service');
         $service->delete('s_emotion_attributes', 'mnposition');
+        $service->delete('s_emotion_attributes', 'mncssclasses');
     }
 
 
