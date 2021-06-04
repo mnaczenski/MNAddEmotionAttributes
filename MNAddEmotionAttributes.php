@@ -1,5 +1,6 @@
 <?php
 namespace MNAddEmotionAttributes;
+use Noodlehaus\Exception;
 use Shopware\Components\Plugin\Context\ActivateContext;
 use Shopware\Components\Plugin\Context\DeactivateContext;
 use Shopware\Components\Plugin\Context\InstallContext;
@@ -91,12 +92,10 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
 
         $service = $this->container->get('shopware_attribute.data_loader');
 
-        $i = 0;
-        foreach ($emotions as $emotion)
+        foreach ($emotions as $key => $emotion)
         {
             $attributes['attributes'] = $service->load('s_emotion_attributes', $emotion['id']);
-            $emotions[$i] = $emotions[$i] + $attributes;
-            $i++;
+            $emotions[$key] = array_merge($emotion,  $attributes);
         }
 
         $view->assign('emotions', $emotions);
