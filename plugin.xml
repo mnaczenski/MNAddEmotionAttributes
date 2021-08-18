@@ -3,7 +3,7 @@
     <label lang="de">MNAddEmotionAttributes</label>
     <label lang="en">MNAddEmotionAttributes</label>
 
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <link>https://github.com/mnaczenski/</link>
     <author>Moritz Naczenski</author>
     <compatibility minVersion="5.2.0" />
@@ -15,5 +15,9 @@
     <changelog version="1.0.1">
         <changes lang="de">Option hinzugefügt der Einkaufswelt zusätzliche CSS Klassen zu geben.</changes>
         <changes lang="en">Added option to define custom CSS classes for shoppingworld elements.</changes>
+    </changelog>
+    <changelog version="1.0.2">
+        <changes lang="de">Zusätzliche CSS Klassen werden auf Landingseiten nicht ausgegeben.</changes>
+        <changes lang="en">Additional CSS Classes not shown in landing pages.</changes>
     </changelog>
 </plugin>

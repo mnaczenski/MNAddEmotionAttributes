@@ -24,6 +24,7 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
         return [
             'Enlight_Controller_Action_PostDispatchSecure_Frontend_Listing' => 'onFrontendListing',
             'Enlight_Controller_Action_PostDispatchSecure_Frontend_Index' => 'onFrontendListing',
+            'Enlight_Controller_Action_PostDispatchSecure_Frontend_Campaign' => 'onFrontendCampaign',
             'Enlight_Controller_Action_PostDispatchSecure_Frontend' => 'onFrontend'
         ];
     }
@@ -70,6 +71,10 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
      */
     public function uninstall(UninstallContext $context)
     {
+        if ($context->keepUserData()) {
+            return;
+        }
+
         $service = $this->container->get('shopware_attribute.crud_service');
         $service->delete('s_emotion_attributes', 'mnposition');
         $service->delete('s_emotion_attributes', 'mncssclasses');
@@ -89,16 +94,27 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
 
         $emotions = $view->getAssign('emotions');
 
-
-        $service = $this->container->get('shopware_attribute.data_loader');
-
-        foreach ($emotions as $key => $emotion)
-        {
-            $attributes['attributes'] = $service->load('s_emotion_attributes', $emotion['id']);
-            $emotions[$key] = array_merge($emotion,  $attributes);
-        }
+        $this->updateEmotions($emotions);
 
         $view->assign('emotions', $emotions);
+    }
+
+    /**
+     * @param \Enlight_Event_EventArgs $args
+     * @throws \Exception
+     */
+
+    public function onFrontendCampaign(\Enlight_Event_EventArgs $args)
+    {
+        /** @var \Enlight_Controller_Action $controller */
+        $controller = $args->get('subject');
+        $view = $controller->View();
+
+        $landingPage = $view->getAssign('landingPage');
+
+        $this->updateEmotions($landingPage['emotions']);
+
+        $view->assign('landingPage', $landingPage);
     }
 
     public function onFrontend(\Enlight_Event_EventArgs $args)
@@ -111,6 +127,16 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
             $this->container->get('Template')->addTemplateDir(
                 $this->getPath() . '/Resources/views/'
             );
+        }
+    }
+
+    private function updateEmotions(&$emotions) {
+        $service = $this->container->get('shopware_attribute.data_loader');
+
+        foreach ($emotions as $key => $emotion)
+        {
+            $attributes['attributes'] = $service->load('s_emotion_attributes', $emotion['id']);
+            $emotions[$key] = array_merge($emotion,  $attributes);
         }
     }
 }
