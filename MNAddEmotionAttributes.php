@@ -1,6 +1,6 @@
 <?php
 namespace MNAddEmotionAttributes;
-use Noodlehaus\Exception;
+
 use Shopware\Components\Plugin\Context\ActivateContext;
 use Shopware\Components\Plugin\Context\DeactivateContext;
 use Shopware\Components\Plugin\Context\InstallContext;
