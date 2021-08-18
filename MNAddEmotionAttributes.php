@@ -1,6 +1,5 @@
 <?php
 namespace MNAddEmotionAttributes;
-
 use Shopware\Components\Plugin\Context\ActivateContext;
 use Shopware\Components\Plugin\Context\DeactivateContext;
 use Shopware\Components\Plugin\Context\InstallContext;
@@ -49,10 +48,6 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
             'label' => 'Eigene CSS Klassen',
             'supportText' => 'Mehrere CSS Klassen mit Leerzeichen trennen',
             'displayInBackend' => true,
-            'arrayStore' => [
-                ['key' => '1', 'value' => 'Vor Listing'],
-                ['key' => '2', 'value' => 'Nach Listing']
-            ],
         ]);
     }
 
@@ -74,7 +69,7 @@ class MNAddEmotionAttributes extends \Shopware\Components\Plugin
         if ($context->keepUserData()) {
             return;
         }
-
+        
         $service = $this->container->get('shopware_attribute.crud_service');
         $service->delete('s_emotion_attributes', 'mnposition');
         $service->delete('s_emotion_attributes', 'mncssclasses');
